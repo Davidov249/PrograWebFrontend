@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import axios from 'axios';
-import { faCog, faCogs, faTrash, faUser, faUserCog } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faArrowRight, faCog, faCogs, faTrash, faUser, faUserCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Playlist extends Component {
@@ -73,7 +73,15 @@ class Playlist extends Component {
                 </div>
                 <div className="row">
                     <div className="col">
-
+                        <nav aria-label="Page navigation" className="pagination d-flex justify-content-center">
+                            <ul className="pagination">
+                                <il className="page-item"><a className="page-link"><span className="icon"><FontAwesomeIcon icon={faArrowLeft}/></span></a></il>
+                                <il className="page-item"><a className="page-link">1</a></il>
+                                <il className="page-item"><a className="page-link">2</a></il>
+                                <il className="page-item"><a className="page-link">3</a></il>
+                                <il className="page-item"><a className="page-link"><span className="icon"><FontAwesomeIcon icon={faArrowRight}/></span></a></il>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>

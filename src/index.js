@@ -4,6 +4,7 @@ import reportWebVitals from './reportWebVitals';
 import Login from "./Components/Login";
 import Registro from "./Components/Registro";
 import Main from "./Components/Main";
+import Song from "./Components/Song";
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.js";
@@ -26,6 +27,11 @@ ReactDOM.render(
     </Route>
     <Route exact path="/signup">
       <Registro />
+    </Route>
+    <Route exact path="/addsong">
+      <Main>
+        <Song />
+      </Main>
     </Route>
   </Switch>
 </Router>,

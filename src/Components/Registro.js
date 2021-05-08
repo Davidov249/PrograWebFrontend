@@ -39,7 +39,7 @@ class Registro extends Component {
                 <form className="form-signin">
                     <img className="mb-4" src={Logo} alt="Logo" width="72" height="72"></img>
                     <h1 className="h3 mb-3 font-weigth-normal">Registro</h1>
-                    <lable for="inputEmail" className="sr-only">Email address</lable>
+                    <label for="inputEmail" className="sr-only">Email address</label>
                     <input type="email" id="inputEmail" className="form-control" onChange={this.onHandleChange} placeholder="Direccion Email" required autoFocus></input>
                     <label for="inputPassword" className="sr-only">Password</label>
                     <input type="password" id="inputPassword" className="form-control" onChange={this.onHandleChange} placeholder="Password" required></input>
