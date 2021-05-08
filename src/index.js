@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import Login from "./Components/Login";
 import Registro from "./Components/Registro";
-import Header from "./Components/Header";
-import Main from "./Components/Main"
-import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
+import Main from "./Components/Main";
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 import "../node_modules/bootstrap/dist/js/bootstrap.js";
-import "./index.css"
+import "./index.css";
 import Playlist from './Components/Playlist';
-
+import Amplify from 'aws-amplify';
+import CognitoConfig from "../src/config.json";
+Amplify.configure(CognitoConfig)
+console.log(CognitoConfig)
 ReactDOM.render(            
 <Router>
   <Switch>

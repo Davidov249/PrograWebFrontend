@@ -1,23 +1,52 @@
 import React, {Component} from "react"
 import Logo from "../Assets/nota.png"
+import { Auth } from "aws-amplify"
 
 class Registro extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            usuario: "",
+            contrasenia: "",
+        }
+        this.signUp = this.signUp.bind(this)
+        this.onHandleChange = this.onHandleChange.bind(this)
+    }
+
+    async signUp(event){
+        event.preventDefault()
+        try {
+            await Auth.signUp({
+                username: this.state.usuario,
+                password: this.state.contrasenia
+            })
+            console.log("se hizo el registro")
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
+    onHandleChange(event) {
+        this.setState({
+            usuario: (event.target.id === 'inputEmail') ? event.target.value : this.state.usuario,
+            contrasenia: (event.target.id === 'inputPassword') ? event.target.value : this.state.contrasenia
+        })
+    }
+
     render() {
         return (
             <div className="text-center">
                 <form className="form-signin">
                     <img className="mb-4" src={Logo} alt="Logo" width="72" height="72"></img>
                     <h1 className="h3 mb-3 font-weigth-normal">Registro</h1>
-                    <lable for="inputNombre" className="sr-only">Nombre</lable>
-                    <input type="email" id="inputNombre" className="form-control" placeholder="Nombre" required autoFocus></input>
                     <lable for="inputEmail" className="sr-only">Email address</lable>
-                    <input type="email" id="inputEmail" className="form-control" placeholder="Direccion Email" required autoFocus></input>
+                    <input type="email" id="inputEmail" className="form-control" onChange={this.onHandleChange} placeholder="Direccion Email" required autoFocus></input>
                     <label for="inputPassword" className="sr-only">Password</label>
-                    <input type="password" id="inputPassword" className="form-control" placeholder="Password" required></input>
+                    <input type="password" id="inputPassword" className="form-control" onChange={this.onHandleChange} placeholder="Password" required></input>
                     <label for="inputCPassword" className="sr-only">Confirmar Password</label>
                     <input type="password" id="inputCPassword" className="form-control" placeholder="Confirmar Password" required></input>
                     <br/>
-                    <button type="submit" className="btn btn-lg btn-primary btn-block">Sign In</button>
+                    <button type="submit" className="btn btn-lg btn-primary btn-block" onClick={this.signUp}>Sign In</button>
                 </form>
             </div>
         )
