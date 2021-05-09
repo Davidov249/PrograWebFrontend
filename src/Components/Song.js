@@ -13,11 +13,22 @@ class Song extends Component {
             genero: "",
             duracion: "",
             exito: true,
-            isUpdate: false
+            isUpdate: false,
+            textoToast: ""
         }
         this.onHandleChange = this.onHandleChange.bind(this)
         this.onSubmitSong = this.onSubmitSong.bind(this)
         this.bootstrapAlert = this.bootstrapAlert.bind(this)
+        this.onUpgdateSong = this.onUpgdateSong.bind(this)
+        axios.get("http://localhost:1024/api/v1/music/"+this.props.songid).then((data) =>{
+            //console.log(data.data.result[0])
+            this.setState({
+                nombre: data.data.result[0].name,
+                autor: data.data.result[0].author,
+                genero: data.data.result[0].genre,
+                duracion: data.data.result[0].length
+            })
+        })
     }
 
     onHandleChange(event) {
@@ -27,6 +38,32 @@ class Song extends Component {
             genero: (event.target.id === 'inputGeneroC') ? event.target.value : this.state.genero,
             duracion: (event.target.id === 'inputDuracionC') ? event.target.value : this.state.duracion
         })
+    }
+
+    onUpgdateSong() {
+        try {
+            axios.put("http://localhost:1024/api/v1/music/"+this.props.songid, {
+                "name": this.state.nombre, 
+                "author": this.state.autor,
+                "genre": this.state.genero,
+                "length": this.state.duracion
+            }).then((data) => {
+                if (data.status === 202) {
+                    this.setState({
+                        exito: true
+                    })
+                    this.setState({textoToast: "¡Se actualizó la canción con éxito!"})
+                    this.bootstrapAlert();
+                } else {
+                    this.setState({
+                        exito: false
+                    })
+                    this.bootstrapAlert();
+                }
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
     }
 
     onSubmitSong() {
@@ -46,6 +83,8 @@ class Song extends Component {
                         genero: "",
                         duracion: "",
                     })
+                    this.setState({textoToast: "¡Se agregó la canción con éxito!"})
+                    this.bootstrapAlert();
                 } else {
                     this.setState({exito: false})
                     this.setState({
@@ -54,6 +93,7 @@ class Song extends Component {
                         genero: "",
                         duracion: "",
                     })
+                    this.bootstrapAlert();
                 }
             })
         } catch (error) {
@@ -63,7 +103,7 @@ class Song extends Component {
 
     bootstrapAlert() {
         if (this.state.exito) {
-            toast.success('¡Se agregó la canción con exito!')
+            toast.success(this.state.textoToast)
         } else {
             toast.error('¡Oh no! Parece que hubo un error')
         }
@@ -76,7 +116,7 @@ class Song extends Component {
                     <div className="col">
                         <div className="text-center">
                             <form>
-                                <h1 className="h3 mb-3 font-weigth-normal">Agregar Cancion</h1>
+                                <h1 className="h3 mb-3 font-weigth-normal">{this.props.songid ? "Actualizar Cancion" : "Agregar Cancion"}</h1>
                                 <div className="form-group row">
                                     <label for="inputNombreC" className="col-sm-2 col-form-label">Nombre</label>
                                     <div className="col-sm-8">
@@ -104,9 +144,12 @@ class Song extends Component {
                                 <br/>
                                 <button type="submit" className="btn btn-secondary" onClick={(e) => {
                                     e.preventDefault();
-                                    this.onSubmitSong();
-                                    this.bootstrapAlert();
-                                    }}>Agregar!</button>
+                                    if (this.props.songid) {
+                                        this.onUpgdateSong();
+                                    } else{
+                                        this.onSubmitSong();
+                                    }
+                                    }}>{this.props.songid ? "Actualizar!" : "Agregar!"}</button>
                             </form>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
-import React, {Component} from "react"
-import Logo from "../Assets/nota.png"
-import { Auth } from "aws-amplify"
+import React, {Component} from "react";
+import { Redirect } from "react-router-dom";
+import Logo from "../Assets/nota.png";
+import { Auth } from "aws-amplify";
 
 class Login extends Component {
     
@@ -8,7 +9,8 @@ class Login extends Component {
         super(props)
         this.state = {
             usuario: "",
-            contrasenia: ""
+            contrasenia: "",
+            isLoggedIn: false
         }
         this.signIn = this.signIn.bind(this)
         this.onHandleChange = this.onHandleChange.bind(this)
@@ -18,8 +20,9 @@ class Login extends Component {
         event.preventDefault()
         console.log(this.state)
         try {
-            await Auth.signIn(this.state.usuario, this.state.contrasenia);
-            console.log("si llego")
+            const user = await Auth.signIn(this.state.usuario, this.state.contrasenia);
+            this.setState({isLoggedIn: true})
+            console.log(user)
         } catch (error) {
             console.log(error.message);
         }
@@ -33,6 +36,7 @@ class Login extends Component {
     }
 
     render() {
+        if (this.state.isLoggedIn) return <Redirect to="/playlist"/>
         return (
             <div className="text-center">
                 <form className="form-signin">

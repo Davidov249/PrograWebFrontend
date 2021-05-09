@@ -1,15 +1,19 @@
 import React, {Component} from "react";
+import { Redirect, Link } from "react-router-dom";
 import axios from 'axios';
 import { faArrowLeft, faArrowRight, faCog, faCogs, faTrash, faUser, faUserCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Song from "./Song";
 
 class Playlist extends Component {
     constructor(props) {
         super(props)
         this.state = {
             isLoading: false,
-            playlistDataRender: []
+            playlistDataRender: [],
+            redirect: null
         }
+        this.deleteSong = this.deleteSong.bind(this)
     }
 
     renderTableRows = () => {
@@ -22,8 +26,11 @@ class Playlist extends Component {
                     <td>{song.length}</td>
                     <td>
                         <div className="btn-group" role="group">
-                            <button type="button" className="btn btn-outline-info"><span className="icon"><FontAwesomeIcon icon={faCog}/></span></button>
-                            <button type="button" className="btn btn-outline-danger"><span className="icon"><FontAwesomeIcon icon={faTrash}/></span></button>
+                            <Link to={"/uptsong/"+song._id} className="btn btn-outline-info"><span className="icon"><FontAwesomeIcon icon={faCog}/></span></Link>
+                            <button type="button" className="btn btn-outline-danger" onClick={() => {
+                                this.deleteSong(song._id);
+                                //funcion para rerenderizar tabla
+                            }}><span className="icon"><FontAwesomeIcon icon={faTrash}/></span></button>
                         </div>
                     </td>
                 </tr>
@@ -31,16 +38,23 @@ class Playlist extends Component {
         })
     }
 
+    deleteSong(id) {
+        try {
+            console.log("entro al delete")
+            axios.delete("http://localhost:1024/api/v1/music/" + id).then((data) => {
+                    window.location.reload()
+                }
+            )
+        } catch (error) {
+            console.log("error al borrar")
+        }
+    }
+
     async componentDidMount() {
         this.setState({isLoading:true})
         axios.get("http://localhost:1024/api/v1/music").then((data) => {
-            console.log(data.data)
             this.setState({playlistDataRender: data.data, isLoading: false})
         })
-        /*const response = await fetch("http://localhost:1024/api/v1/music").then((res) => res.json()).then((data) => {
-            console.log(data)
-            this.setState({playlistDataRender: data, isLoading: false})
-        })*/
     }
 
     render() {

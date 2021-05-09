@@ -1,7 +1,23 @@
-import React, { Component } from "react"
-import Logo from "../Assets/nota.png"
+import React, { Component } from "react";
+import { Auth } from "aws-amplify";
+import Logo from "../Assets/nota.png";
+import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 class Header extends Component {
+
+    constructor(props) {
+        super(props)
+        this.signOut = this.signOut.bind(this)
+    }
+
+    async signOut() {
+        try {
+            await Auth.signOut({ global: true})
+        } catch (error) {
+            console.log(error.message)
+        }
+    }
+
     render() {
         return (
             <nav className="navbar navbar-expand-lg navbar-light " style={{backgroundColor: "#00695c"}}>
@@ -23,11 +39,11 @@ class Header extends Component {
                     </ul>
                     <hr className="d-block d-sm-block d-md-block d-lg-none"/>
                     <ul className="navbar-nav ml-auto ">
-                        <li>
+                        {/*<li>
                             <a className="nav-link d-lg-inline-block mb-3 mb-md-0 ml-md-3 ">Perfil</a>
-                        </li>
+                        </li>*/}
                         <li>
-                            <a className="nav-link d-lg-inline-block mb-3 mb-md-0 ml-md-3 ">Cerrar Sesion</a>
+                            <Link to="/login" className="nav-link d-lg-inline-block mb-3 mb-md-0 ml-md-3 " onClick={() => this.signOut}>Cerrar Sesion</Link>
                         </li>
                     </ul>
                 </div>

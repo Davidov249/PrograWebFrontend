@@ -33,6 +33,14 @@ ReactDOM.render(
         <Song />
       </Main>
     </Route>
+    <Route exact path="/uptsong/:id" render={(props) => {
+        return (
+          <Main>
+            <Song songid={props.match.params.id}/>
+          </Main>
+        )
+      }}>
+    </Route>
   </Switch>
 </Router>,
  document.getElementById("root"));
