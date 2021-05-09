@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Auth } from "aws-amplify";
+import { Auth, auth0SignInButton } from "aws-amplify";
 import Logo from "../Assets/nota.png";
 import { BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
@@ -43,7 +43,7 @@ class Header extends Component {
                             <a className="nav-link d-lg-inline-block mb-3 mb-md-0 ml-md-3 ">Perfil</a>
                         </li>*/}
                         <li>
-                            <Link to="/login" className="nav-link d-lg-inline-block mb-3 mb-md-0 ml-md-3 " onClick={() => this.signOut}>Cerrar Sesion</Link>
+                            <Link to="/login" className="nav-link d-lg-inline-block mb-3 mb-md-0 ml-md-3 " onClick={() =>{Auth.signOut({"global": true})}}>Cerrar Sesion</Link>
                         </li>
                     </ul>
                 </div>

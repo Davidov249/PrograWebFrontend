@@ -20,7 +20,11 @@ class Song extends Component {
         this.onSubmitSong = this.onSubmitSong.bind(this)
         this.bootstrapAlert = this.bootstrapAlert.bind(this)
         this.onUpgdateSong = this.onUpgdateSong.bind(this)
-        axios.get("http://localhost:1024/api/v1/music/"+this.props.songid).then((data) =>{
+        axios.get("http://localhost:1024/api/v1/music/"+this.props.songid, {
+            headers: {
+                authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
+            }
+        }).then((data) =>{
             //console.log(data.data.result[0])
             this.setState({
                 nombre: data.data.result[0].name,
@@ -47,7 +51,12 @@ class Song extends Component {
                 "author": this.state.autor,
                 "genre": this.state.genero,
                 "length": this.state.duracion
-            }).then((data) => {
+            },{
+                headers: {
+                    authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
+                }
+            }
+            ).then((data) => {
                 if (data.status === 202) {
                     this.setState({
                         exito: true
@@ -74,6 +83,10 @@ class Song extends Component {
                 "author": this.state.autor,
                 "genre": this.state.genero,
                 "length": this.state.duracion
+            },{
+                headers: {
+                    authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
+                }
             }).then((data) => {
                 if (data.status === 201) {
                     this.setState({exito: true})

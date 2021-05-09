@@ -41,7 +41,11 @@ class Playlist extends Component {
     deleteSong(id) {
         try {
             console.log("entro al delete")
-            axios.delete("http://localhost:1024/api/v1/music/" + id).then((data) => {
+            axios.delete("http://localhost:1024/api/v1/music/" + id, {
+                headers: {
+                    authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
+                }
+            }).then((data) => {
                     window.location.reload()
                 }
             )
@@ -52,7 +56,11 @@ class Playlist extends Component {
 
     async componentDidMount() {
         this.setState({isLoading:true})
-        axios.get("http://localhost:1024/api/v1/music").then((data) => {
+        axios.get("http://localhost:1024/api/v1/music", {
+            headers: {
+                authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
+            }
+        }).then((data) => {
             this.setState({playlistDataRender: data.data, isLoading: false})
         })
     }
