@@ -20,7 +20,7 @@ class Song extends Component {
         this.onSubmitSong = this.onSubmitSong.bind(this)
         this.bootstrapAlert = this.bootstrapAlert.bind(this)
         this.onUpgdateSong = this.onUpgdateSong.bind(this)
-        axios.get("http://localhost:1024/api/v1/music/one/"+this.props.songid, {
+        axios.get("MusicXDlb-1119259436.us-east-1.elb.amazonaws.com/api/v1/music/one/"+this.props.songid, {
             headers: {
                 authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
             }
@@ -46,7 +46,7 @@ class Song extends Component {
 
     onUpgdateSong() {
         try {
-            axios.put("http://localhost:1024/api/v1/music/"+this.props.songid, {
+            axios.put("MusicXDlb-1119259436.us-east-1.elb.amazonaws.com/api/v1/music/"+this.props.songid, {
                 "userid": JSON.parse(localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".userData")).UserAttributes[0].Value,
                 "name": this.state.nombre, 
                 "author": this.state.autor,
@@ -78,7 +78,7 @@ class Song extends Component {
 
     onSubmitSong() {
         try {
-            axios.post("http://localhost:1024/api/v1/music", 
+            axios.post("MusicXDlb-1119259436.us-east-1.elb.amazonaws.com/api/v1/music", 
             {
                 "userid": JSON.parse(localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".userData")).UserAttributes[0].Value,
                 "name": this.state.nombre, 
