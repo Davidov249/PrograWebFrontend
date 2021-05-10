@@ -17,12 +17,12 @@ console.log(CognitoConfig)
 ReactDOM.render(            
 <Router>
   <Switch>
-    <Route exact path={["/", "/playlist"]}>
+    <Route exact path="/playlist">
       <Main>
         <Playlist />
       </Main>
     </Route>
-    <Route exact path="/login">
+    <Route exact path={["/", "/login"]}>
       <Login />
     </Route>
     <Route exact path="/signup">

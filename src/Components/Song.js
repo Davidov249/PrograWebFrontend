@@ -20,7 +20,7 @@ class Song extends Component {
         this.onSubmitSong = this.onSubmitSong.bind(this)
         this.bootstrapAlert = this.bootstrapAlert.bind(this)
         this.onUpgdateSong = this.onUpgdateSong.bind(this)
-        axios.get("http://localhost:1024/api/v1/music/"+this.props.songid, {
+        axios.get("http://localhost:1024/api/v1/music/one/"+this.props.songid, {
             headers: {
                 authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
             }
@@ -47,6 +47,7 @@ class Song extends Component {
     onUpgdateSong() {
         try {
             axios.put("http://localhost:1024/api/v1/music/"+this.props.songid, {
+                "userid": JSON.parse(localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".userData")).UserAttributes[0].Value,
                 "name": this.state.nombre, 
                 "author": this.state.autor,
                 "genre": this.state.genero,
@@ -79,6 +80,7 @@ class Song extends Component {
         try {
             axios.post("http://localhost:1024/api/v1/music", 
             {
+                "userid": JSON.parse(localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".userData")).UserAttributes[0].Value,
                 "name": this.state.nombre, 
                 "author": this.state.autor,
                 "genre": this.state.genero,
@@ -128,41 +130,41 @@ class Song extends Component {
                 <div className="row">
                     <div className="col">
                         <div className="text-center">
-                            <form>
-                                <h1 className="h3 mb-3 font-weigth-normal">{this.props.songid ? "Actualizar Cancion" : "Agregar Cancion"}</h1>
-                                <div className="form-group row">
-                                    <label for="inputNombreC" className="col-sm-2 col-form-label">Nombre</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" id="inputNombreC" value={this.state.nombre} className="form-control" onChange={this.onHandleChange} placeholder="Nombre" required></input>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label for="inputAutorC" className="col-sm-2 col-form-label">Autor</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" id="inputAutorC" className="form-control" value={this.state.autor} onChange={this.onHandleChange} placeholder="Autor" required></input>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label for="inputGeneroC" className="col-sm-2 col-form-label">Genero</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" id="inputGeneroC" className="form-control" value={this.state.genero} onChange={this.onHandleChange} placeholder="Genero" required></input>
-                                    </div>
-                                </div>
-                                <div className="form-group row">
-                                    <label for="inputDuracionC" className="col-sm-2 col-form-label">Duracion</label>
-                                    <div className="col-sm-8">
-                                        <input type="text" id="inputDuracionC" className="form-control" value={this.state.duracion} onChange={this.onHandleChange} placeholder="00:00" required></input>
-                                    </div>
-                                </div>
-                                <br/>
-                                <button type="submit" className="btn btn-secondary" onClick={(e) => {
+                            <form onSubmit={(e) => {
                                     e.preventDefault();
                                     if (this.props.songid) {
                                         this.onUpgdateSong();
                                     } else{
                                         this.onSubmitSong();
                                     }
-                                    }}>{this.props.songid ? "Actualizar!" : "Agregar!"}</button>
+                                    }}>
+                                <h1 className="h3 mb-3 font-weigth-normal">{this.props.songid ? "Actualizar Cancion" : "Agregar Cancion"}</h1>
+                                <div className="form-group row">
+                                    <label for="inputNombreC" className="col-sm-2 col-form-label">Nombre</label>
+                                    <div className="col-sm-8">
+                                        <input type="text" id="inputNombreC" value={this.state.nombre} className="form-control required" onChange={this.onHandleChange} placeholder="Nombre" required></input>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label for="inputAutorC" className="col-sm-2 col-form-label">Autor</label>
+                                    <div className="col-sm-8">
+                                        <input type="text" id="inputAutorC" className="form-control required" value={this.state.autor} onChange={this.onHandleChange} placeholder="Autor" required></input>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label for="inputGeneroC" className="col-sm-2 col-form-label">Genero</label>
+                                    <div className="col-sm-8">
+                                        <input type="text" id="inputGeneroC" className="form-control required" value={this.state.genero} onChange={this.onHandleChange} placeholder="Genero" required></input>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label for="inputDuracionC" className="col-sm-2 col-form-label">Duracion</label>
+                                    <div className="col-sm-8">
+                                        <input type="text" id="inputDuracionC" className="form-control required" value={this.state.duracion} onChange={this.onHandleChange} placeholder="00:00" required></input>
+                                    </div>
+                                </div>
+                                <br/>
+                                <button type="submit" className="btn btn-secondary">{this.props.songid ? "Actualizar!" : "Agregar!"}</button>
                             </form>
                         </div>
                     </div>

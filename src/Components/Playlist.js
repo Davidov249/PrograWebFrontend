@@ -56,7 +56,9 @@ class Playlist extends Component {
 
     async componentDidMount() {
         this.setState({isLoading:true})
-        axios.get("http://localhost:1024/api/v1/music", {
+        var userdata = JSON.parse(localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".userData"))
+        var username = userdata.UserAttributes[0].Value
+        axios.get("http://localhost:1024/api/v1/music/"+username, {
             headers: {
                 authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
             }
