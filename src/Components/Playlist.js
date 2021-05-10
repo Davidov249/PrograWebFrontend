@@ -41,7 +41,7 @@ class Playlist extends Component {
     deleteSong(id) {
         try {
             console.log("entro al delete")
-            axios.delete("MusicXDlb-1119259436.us-east-1.elb.amazonaws.com/api/v1/music/" + id, {
+            axios.delete("http://MusicXDlb-1119259436.us-east-1.elb.amazonaws.com/api/v1/music/" + id, {
                 headers: {
                     authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
                 }
@@ -58,7 +58,7 @@ class Playlist extends Component {
         this.setState({isLoading:true})
         var userdata = JSON.parse(localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".userData"))
         var username = userdata.UserAttributes[0].Value
-        axios.get("MusicXDlb-1119259436.us-east-1.elb.amazonaws.com/api/v1/music/"+username, {
+        axios.get("http://MusicXDlb-1119259436.us-east-1.elb.amazonaws.com/api/v1/music/"+username, {
             headers: {
                 authorization: localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8."+localStorage.getItem("CognitoIdentityServiceProvider.77vh9pav4t3igthjasmd085gn8.LastAuthUser")+".idToken")
             }
