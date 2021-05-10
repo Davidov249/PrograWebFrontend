@@ -37,7 +37,8 @@ class Registro extends Component {
     onHandleChange(event) {
         this.setState({
             usuario: (event.target.id === 'inputEmail') ? event.target.value : this.state.usuario,
-            contrasenia: (event.target.id === 'inputPassword') ? event.target.value : this.state.contrasenia
+            contrasenia: (event.target.id === 'inputPassword') ? event.target.value : this.state.contrasenia,
+            confcontra: (event.target.id === 'inputCPassword') ? event.target.value : this.state.confcontra
         })
     }
 
@@ -52,7 +53,7 @@ class Registro extends Component {
                     <label for="inputPassword" className="sr-only">Password</label>
                     <input type="password" id="inputPassword" className="form-control required" onChange={this.onHandleChange} placeholder="Password" required></input>
                     <label for="inputCPassword" className="sr-only">Confirmar Password</label>
-                    <input type="password" id="inputCPassword" className="form-control required" placeholder="Confirmar Password" required></input>
+                    <input type="password" id="inputCPassword" className="form-control required" onChange={this.onHandleChange} placeholder="Confirmar Password" required></input>
                     <div className={this.state.clasenotificacion}>Las contraseñas no coinciden!</div>
                     <br/>
                     <button type="submit" className="btn btn-lg btn-primary btn-block">Sign In</button>
